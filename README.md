@@ -8,16 +8,10 @@ The pipeline is organism-independent. You supply the URL of a reference genome a
 
 ## Workflow
 
-```mermaid
-flowchart TD
-    A[SRA accession list] --> B[01 Download FASTQ<br/>prefetch + fasterq-dump]
-    B --> C[02 QC and trimming<br/>FastQC + fastp + MultiQC]
-    C --> D[03 Alignment<br/>BWA-MEM2 + samtools]
-    D --> E[04 Mark duplicates + BQSR<br/>Picard + GATK]
-    E --> F[05 Variant calling<br/>HaplotypeCaller GVCF + joint genotyping]
-    F --> G[06 Variant filtering<br/>GATK hard filters + bcftools]
-    G --> H[PASS SNPs and indels VCF]
-```
+<p align="center">
+  <img src="WGS_Workflow.png" alt="WGS Variant Calling Pipeline Workflow" width="550">
+</p>
+
 
 ## Pipeline steps
 
