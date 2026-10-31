@@ -1,4 +1,4 @@
-# GATK WGS Variant Calling Pipeline
+# WGS Variant Calling Pipeline
 
 An end-to-end, script-based pipeline for **whole genome sequencing (WGS)** analysis of paired-end Illumina data, from raw reads (NCBI SRA downloads or your own FASTQ files) to hard-filtered SNP and indel call sets, following the GATK germline short-variant workflow.
 
@@ -47,18 +47,7 @@ The pipeline is organism-independent. You supply the URL of a reference genome a
 ```bash
 git clone https://github.com/bushra-bibi-codes/complex-organisms-WGS-pipeline.git
 cd complex-organisms-WGS-pipeline
-```
 
-**Option A: from `environment.yml` (recommended)**
-
-```bash
-conda env create -f environment.yml
-conda activate gatk-wgs
-```
-
-**Option B: manual installation**
-
-```bash
 conda create -n gatk-wgs -c bioconda -c conda-forge python=3.11
 conda activate gatk-wgs
 
@@ -70,8 +59,6 @@ pip install 'multiqc<1.34'
 # Clean the conda package cache to free disk space
 conda clean --all -y
 ```
-
-The setup follows the [BCH709 resequencing tutorial](https://bch709.plantgenomicslab.org/resequencing_tutorial/index.html) (CC BY 4.0).
 
 ### Verify the installation
 
