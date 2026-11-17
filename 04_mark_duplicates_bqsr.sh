@@ -17,6 +17,7 @@ KNOWN_SITES="${REF_DIR}/known_variants.vcf.gz"
 ALIGN_DIR="align"
 MARKDUP_DIR="markdup"
 BQSR_DIR="bqsr"
+THREADS=40
 
 # URL of a known-sites VCF (bgzipped, .vcf.gz) used for BQSR. Replace with your own.
 VCF_URL="https://example.org/path/to/known_variants.vcf.gz"
@@ -57,7 +58,7 @@ for bam in "${ALIGN_DIR}"/*.bam; do
         M="${MARKDUP_DIR}/${sample}.markdup.metrics" \
         VALIDATION_STRINGENCY=SILENT
 
-    samtools index ${BAM_INDEX_OPTS} "$markdup_bam"
+    samtools index -@ THREADS ${BAM_INDEX_OPTS} "$markdup_bam"
 
     echo "📊 Computing BQSR recalibration table for ${sample}..."
     gatk --java-options "-Xmx${JAVA_HEAP} -XX:ParallelGCThreads=${GC_THREADS}" BaseRecalibrator \
@@ -73,7 +74,7 @@ for bam in "${ALIGN_DIR}"/*.bam; do
         --bqsr-recal-file "$recal_table" \
         -O "$recal_bam"
 
-    samtools index ${BAM_INDEX_OPTS} "$recal_bam"
+    samtools index -@ THREADS ${BAM_INDEX_OPTS} "$recal_bam"
     echo "✅ ${sample} done"
 done
 
@@ -88,7 +89,7 @@ done
 #         O=${MARKDUP_DIR}/{}.markdup.bam \
 #         M=${MARKDUP_DIR}/{}.markdup.metrics \
 #         VALIDATION_STRINGENCY=SILENT
-#     samtools index ${BAM_INDEX_OPTS} ${MARKDUP_DIR}/{}.markdup.bam
+#     samtools index -@ THREADS ${BAM_INDEX_OPTS} ${MARKDUP_DIR}/{}.markdup.bam
 #     gatk --java-options '-Xmx${JAVA_HEAP} -XX:ParallelGCThreads=${GC_THREADS}' BaseRecalibrator \
 #         -I ${MARKDUP_DIR}/{}.markdup.bam \
 #         -R ${REF} \
@@ -99,7 +100,7 @@ done
 #         -R ${REF} \
 #         --bqsr-recal-file ${BQSR_DIR}/{}.recal.table \
 #         -O ${BQSR_DIR}/{}.recal.bam
-#     samtools index ${BAM_INDEX_OPTS} ${BQSR_DIR}/{}.recal.bam
+#     samtools index -@ THREADS ${BAM_INDEX_OPTS} ${BQSR_DIR}/{}.recal.bam
 # " :::: SRR_Acc_List.txt
 
 # ── QC report ────────────────────────────────────────────────
