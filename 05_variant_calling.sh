@@ -11,7 +11,6 @@
 #          .vcf files with .idx indexes, and cohort.vcf.gz is additionally written with a .csi index)
 #
 # Requirements: gatk4, parallel (only for parallel mode)
-
 set -euo pipefail
 
 REF_DIR="reference"
