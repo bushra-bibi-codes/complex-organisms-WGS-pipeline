@@ -47,7 +47,7 @@ for r1 in "${FASTQ_DIR}"/*_1.fastq.gz; do
 done
 
 # ── Post-trim QC ─────────────────────────────────────────────
-fastqc -t "$THREADS" -o "$POSTQC_DIR" "${TRIM_DIR}"/*_trimmed.fq.gz
+fastqc -t "$THREADS" -o "$POSTQC_DIR" "${TRIM_DIR}"/*_trimmed.fastq.gz
 multiqc "${TRIM_DIR}"/ -n trim_report
 
 multiqc "$POSTQC_DIR" --exclude rsem --exclude gatk -o "$POSTQC_DIR" -n post_trim_multiqc
